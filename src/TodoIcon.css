@@ -1,0 +1,51 @@
+
+.Icon{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.Icon-check {
+    /*background: url("./circle.svg") no-repeat;
+    background-size: 90%;
+    background-position: center center;
+    width: 2.5em;
+    height: 2.5em;
+    border: none;
+    cursor: pointer;*/
+
+    position: absolute;
+    left: 12px;
+}
+
+.Icon-check--activate {
+    /*background: url("./circle-check.svg") no-repeat;
+    background-size: 90%;
+    background-position: center center;
+    width: 2.5em;
+    height: 2.5em;
+    border: none;
+    cursor: pointer;*/
+
+    color: #4caf50;
+}
+
+.Icon-delete{
+    position: absolute;
+    top: -24px;
+    right: 0;
+}
+
+.Icon-delete:hover{
+    color: red;
+}
+
+.Icon-sgv{
+    width: 24px;
+    height: 24px;
+}
