@@ -6,10 +6,13 @@ import './TodoItem.css'
 function TodoItem(props) {
   return (    
     <li className='TodoItem'>
-      <CompleteIcon
+      <CompleteIcon 
         completed={props.completed}
+        onComplete = {props.onComplete}
       />
-      <DeleteIcon/>
+      <DeleteIcon
+        onDelete = {props.onDelete}
+      />
       {/*<span className={`Icon Icon-check ${props.completed && 'Icon-check--activate'}`}
       onClick={props.onComplete}>
         </span>*/

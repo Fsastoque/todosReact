@@ -1,5 +1,4 @@
-
-.Icon{
+.Icon {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -17,13 +16,13 @@
     width: 2.5em;
     height: 2.5em;
     border: none;
-    cursor: pointer;*/
-
+    cursor: pointer;*/    
+    fill: #00B5C4;  
     position: absolute;
     left: 12px;
 }
 
-.Icon-check--activate {
+.Icon-activate {
     /*background: url("./circle-check.svg") no-repeat;
     background-size: 90%;
     background-position: center center;
@@ -32,20 +31,35 @@
     border: none;
     cursor: pointer;*/
 
-    color: #4caf50;
+    /*color: #4caf50;*/
+    fill: #00B5C4;
+    position: absolute;
+    left: 12px;
 }
 
-.Icon-delete{
+.Icon-delete {
     position: absolute;
     top: -24px;
     right: 0;
 }
 
-.Icon-delete:hover{
+/*.Icon-delete:hover{
     color: red;
+}*/
+
+.Icon-check:hover .Icon-svg {
+    fill: green;
 }
 
-.Icon-sgv{
+.Icon-activate:hover .Icon-svg {
+    fill: green;
+}
+
+.Icon-delete:hover .Icon-svg {
+    fill: red;
+}
+
+.Icon-svg {
     width: 24px;
     height: 24px;
 }
