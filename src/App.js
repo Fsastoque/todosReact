@@ -5,67 +5,90 @@ import { TodoList } from './TodoList';
 import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 
-const defaultTodos = [
-  {text: "Hacer tarea", completed: true},
-  {text: "Leer", completed: false},
-  {text: "Entrenar", completed: true},
-  {text: "Pintar", completed: false},
-  {text: "Usar derivados de estados", completed: true}
-]
+// const defaultTodos = [
+//   {text: "Hacer tarea", completed: true},
+//   {text: "Leer", completed: false},
+//   {text: "Entrenar", completed: true},
+//   {text: "Pintar", completed: false},
+//   {text: "Usar derivados de estados", completed: true}
+// ]
+//const stringJson = JSON.stringify(defaultTodos) // se debe pasar a un string el array para guardarlo en localStorage
+// localStorage.setItem('TODOS_V1', defaultTodos)
+// localStorage.removeItem('TODOS_V1')
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos);
+  const localStorageTodos = localStorage.getItem('TODOS_V1'); //Obtener la información guardada en localStorage
+  let parsedTodos;
+
+  if (!localStorageTodos) {
+    localStorage.setItem('TODOS_V1', JSON.stringify('[]'))
+    parsedTodos = [];
+  } else {
+
+    parsedTodos = JSON.parse(localStorageTodos);
+  }
+  
+  const [todos, setTodos] = React.useState(parsedTodos);
+  /*todos = Nombre de la variable para obtener el valor | se obtiene el estado actual
+  setTodos = Funcion que actualiza el valor | actualiza estado
+  */
   const [searchValue, setSearchValue] = React.useState(''); /*estado parametros que envia react, se define un estado inicial en useState*/
 
   /*Estados derivados son calculos o formulas que se hacencon los estados */
-
   const completedTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length;
   const searchedTodos = todos.filter(todo => {
     const todoText = todo.text.toLowerCase();
     const searchText = searchValue.toLowerCase();
-    return todoText.includes(searchText)});
+    return todoText.includes(searchText)
+  });
 
-    const completeTodo = (text) => {
-      const newTodos = [...todos];/*Crear copia arrays todos con los ... */
-      const todoIndex = newTodos.findIndex(
-        (todo) => todo.text === text
-      );
-      newTodos[todoIndex].completed	= true;
-      setTodos(newTodos);
-    };
+  const saveTodos = (newTodos) =>{
+    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
+     setTodos(newTodos);    
+  }
 
-    const deleteTodo = (text) => {
-      const newTodos = [...todos];/*Crear copia arrays todos con los ... */
-      const todoIndex = newTodos.findIndex(
-        (todo) => todo.text === text
-      );
-      newTodos.splice(todoIndex,1);
-      setTodos(newTodos);
-    };
 
-  return (  
+  const completeTodo = (text) => {
+    const newTodos = [...todos];/*Crear copia arrays todos con los ... */
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.text === text
+    );
+    newTodos[todoIndex].completed = true;
+    saveTodos(newTodos);
+  };
+
+  const deleteTodo = (text) => {
+    const newTodos = [...todos];/*Crear copia arrays todos con los ... */
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.text === text
+    );
+    newTodos.splice(todoIndex, 1);
+    saveTodos(newTodos);
+  };
+
+  return (
     <React.Fragment>
-      <TodoCounter 
-      completed={completedTodos} 
-      total={totalTodos}/>      
+      <TodoCounter
+        completed={completedTodos}
+        total={totalTodos} />
       <TodoSearch
-      searchValue ={searchValue}/*Comunicacion de estados de padres a hijos*/
-      setSearchValue = {setSearchValue}
+        searchValue={searchValue}/*Comunicacion de estados de padres a hijos*/
+        setSearchValue={setSearchValue}
       />
       <TodoList>
         {searchedTodos.map(todo =>
-          <TodoItem key={todo.text} 
-          text={todo.text}
-          completed={todo.completed} 
-          onComplete={() => completeTodo(todo.text)}/*Encapsular la funcion dentro de otra funcion para poder enviar el texto */
-          onDelete={() => deleteTodo(todo.text)}
+          <TodoItem key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}/*Encapsular la funcion dentro de otra funcion para poder enviar el texto */
+            onDelete={() => deleteTodo(todo.text)}
           />)}
-      </TodoList> 
+      </TodoList>
 
-       <CreateTodoButton/>
-      
-       </React.Fragment>
+      <CreateTodoButton />
+
+    </React.Fragment>
   );
 }
 
