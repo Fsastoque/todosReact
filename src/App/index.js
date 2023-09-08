@@ -16,19 +16,34 @@ import { CreateTodoButton } from '../CreateTodoButton/index';
 // localStorage.setItem('TODOS_V1', defaultTodos)
 // localStorage.removeItem('TODOS_V1')
 
-function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1'); //Obtener la información guardada en localStorage
-  let parsedTodos;
 
-  if (!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify('[]'))
-    parsedTodos = [];
+//Custom hooks
+function useLocalStorage(itemName, initialValue) {
+
+  const localStorageItem = localStorage.getItem(itemName); //Obtener la información guardada en localStorage
+  let parsedItem;
+
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedItem = initialValue;
   } else {
 
-    parsedTodos = JSON.parse(localStorageTodos);
+    parsedItem = JSON.parse(localStorageItem);
   }
   
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) =>{
+    localStorage.setItem(itemName, JSON.stringify(newItem))
+     setItem(newItem);    
+  };
+
+  return [item, saveItem];
+}
+
+function App() {
+  
+  const [todos, saveTodos] = useLocalStorage('TODO_V1',[]);
   /*todos = Nombre de la variable para obtener el valor | se obtiene el estado actual
   setTodos = Funcion que actualiza el valor | actualiza estado
   */
@@ -42,12 +57,6 @@ function App() {
     const searchText = searchValue.toLowerCase();
     return todoText.includes(searchText)
   });
-
-  const saveTodos = (newTodos) =>{
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
-     setTodos(newTodos);    
-  }
-
 
   const completeTodo = (text) => {
     const newTodos = [...todos];/*Crear copia arrays todos con los ... */
