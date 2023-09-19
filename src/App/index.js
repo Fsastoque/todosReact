@@ -1,9 +1,6 @@
 import React from 'react';
-import { TodoCounter } from '../TodoCounter/index';
-import { TodoSearch } from '../TodoSearch/index';
-import { TodoList } from '../TodoList/index';
-import { TodoItem } from '../TodoItem/index';
-import { CreateTodoButton } from '../CreateTodoButton/index';
+import { AppUI } from './AppUI';
+import { useLocalStorage } from './useLocalStorage';
 
 // const defaultTodos = [
 //   {text: "Hacer tarea", completed: true},
@@ -18,32 +15,13 @@ import { CreateTodoButton } from '../CreateTodoButton/index';
 
 
 //Custom hooks
-function useLocalStorage(itemName, initialValue) {
-
-  const localStorageItem = localStorage.getItem(itemName); //Obtener la información guardada en localStorage
-  let parsedItem;
-
-  if (!localStorageItem) {
-    localStorage.setItem(itemName, JSON.stringify(initialValue))
-    parsedItem = initialValue;
-  } else {
-
-    parsedItem = JSON.parse(localStorageItem);
-  }
-  
-  const [item, setItem] = React.useState(parsedItem);
-
-  const saveItem = (newItem) =>{
-    localStorage.setItem(itemName, JSON.stringify(newItem))
-     setItem(newItem);    
-  };
-
-  return [item, saveItem];
-}
+//Los hooks son funciones que puedes llamar dentro de componentes funcionales 
+//para agregar y manipular características de React, como el estado, el ciclo de
+//vida y los efectos secundarios
 
 function App() {
   
-  const [todos, saveTodos] = useLocalStorage('TODO_V1',[]);
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[]);
   /*todos = Nombre de la variable para obtener el valor | se obtiene el estado actual
   setTodos = Funcion que actualiza el valor | actualiza estado
   */
@@ -74,7 +52,36 @@ function App() {
     );
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
-  };  
-}
+  }; 
+
+console.log('Log 1');
+
+//Efectos
+// React.useEffect(
+//   () => {
+//     console.log('Log 2');
+//   },[]
+// );
+
+React.useEffect(
+  () => {
+    console.log('Looooog 2');
+  },[totalTodos]//Se ejecuta al final y ejecuta cuando cambia el estado del array
+);
+
+console.log('Log 3');
+  //Propiedades que se envian al componente AppUI
+  return (
+    <AppUI 
+      completedTodos={completedTodos}
+      totalTodos={totalTodos}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      completeTodo={completeTodo}
+      deleteTodo={deleteTodo}
+    />
+  ); 
+  }
 
 export default App;
