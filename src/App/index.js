@@ -59,7 +59,7 @@ function App() {
     saveTodos(newTodos);
   }; 
 
-console.log('Log 1');
+//console.log('Log 1');
 
 //Efectos
 // React.useEffect(
@@ -68,13 +68,13 @@ console.log('Log 1');
 //   },[]
 // );
 
-React.useEffect(
-  () => {
-    console.log('Looooog 2');
-  },[totalTodos]//Se ejecuta al final y ejecuta cuando cambia el estado del array
-);
+// React.useEffect(
+//   () => {
+//     console.log('Looooog 2');
+//   },[totalTodos]//Se ejecuta al final y ejecuta cuando cambia el estado del array
+// );
 
-console.log('Log 3');
+//console.log('Log 3');
   //Propiedades que se envian al componente AppUI
   return (
     <AppUI 
