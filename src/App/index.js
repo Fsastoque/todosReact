@@ -21,7 +21,12 @@ import { useLocalStorage } from './useLocalStorage';
 
 function App() {
   
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[]);
+  const {
+    item: todos, 
+    saveItem: saveTodos, 
+    loading, 
+    error,
+  } = useLocalStorage('TODOS_V1',[]);
   /*todos = Nombre de la variable para obtener el valor | se obtiene el estado actual
   setTodos = Funcion que actualiza el valor | actualiza estado
   */
@@ -73,6 +78,8 @@ console.log('Log 3');
   //Propiedades que se envian al componente AppUI
   return (
     <AppUI 
+      loading={loading}
+      error={error}
       completedTodos={completedTodos}
       totalTodos={totalTodos}
       searchValue={searchValue}
