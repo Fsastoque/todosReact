@@ -7,38 +7,33 @@ import { CreateTodoButton } from '../CreateTodoButton';
 import { TodosLoading } from "../TodosLoading";
 import { TodosError } from "../TodosError"
 import { EmptyTodos } from "../EmptyTodos"
+import { TodoContext } from "../TodoContext";
 
 
 //Propiedades que recibe
-function AppUI({
-  loading,
-  error,
-  completedTodos,
-  totalTodos,
-  searchValue,
-  setSearchValue,
-  searchedTodos,
-  completeTodo,
-  deleteTodo
-}){
-    return (      
-        <React.Fragment>
-          <TodoCounter
-            completed={completedTodos}
-            total={totalTodos} />
-          <TodoSearch
-            searchValue={searchValue}/*Comunicacion de estados de padres a hijos*/
-            setSearchValue={setSearchValue}
-          />
+function AppUI({ }) {
+  return (
+    <React.Fragment>
+      <TodoCounter />
+      <TodoSearch />
+
+      <TodoContext.Consumer>
+        {({
+          loading,
+          error,
+          searchedTodos,
+          completeTodo,
+          deleteTodo
+        }) => (
           <TodoList>
-          {loading && (
-          <>
-          <TodosLoading/>,
-          <TodosLoading/>,
-          <TodosLoading/>
-          </>)}
-          {error && <TodosError/>}
-          {(!loading && searchedTodos.length === 0) && <EmptyTodos/> }
+            {loading && (
+              <>
+                <TodosLoading />,
+                <TodosLoading />,
+                <TodosLoading />
+              </>)}
+            {error && <TodosError />}
+            {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
 
             {searchedTodos.map(todo =>
               <TodoItem key={todo.text}
@@ -48,11 +43,12 @@ function AppUI({
                 onDelete={() => deleteTodo(todo.text)}
               />)}
           </TodoList>
-    
-          <CreateTodoButton />
-    
-        </React.Fragment>
-      );
+        )}
+      </TodoContext.Consumer>
+      <CreateTodoButton />
+
+    </React.Fragment>
+  );
 }
 
 export { AppUI };
