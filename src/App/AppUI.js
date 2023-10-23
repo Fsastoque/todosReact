@@ -11,42 +11,38 @@ import { TodoContext } from "../TodoContext";
 
 
 //Propiedades que recibe
-function AppUI({ }) {
+function AppUI() {
+  const {
+    loading,
+    error,
+    searchedTodos,
+    completeTodo,
+    deleteTodo,
+  } = React.useContext(TodoContext)
+
   return (
     <React.Fragment>
       <TodoCounter />
       <TodoSearch />
+      <TodoList>
+        {loading && (
+          <>
+            <TodosLoading />,
+            <TodosLoading />,
+            <TodosLoading />
+          </>)}
+        {error && <TodosError />}
+        {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
 
-      <TodoContext.Consumer>
-        {({
-          loading,
-          error,
-          searchedTodos,
-          completeTodo,
-          deleteTodo
-        }) => (
-          <TodoList>
-            {loading && (
-              <>
-                <TodosLoading />,
-                <TodosLoading />,
-                <TodosLoading />
-              </>)}
-            {error && <TodosError />}
-            {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
-
-            {searchedTodos.map(todo =>
-              <TodoItem key={todo.text}
-                text={todo.text}
-                completed={todo.completed}
-                onComplete={() => completeTodo(todo.text)}/*Encapsular la funcion dentro de otra funcion para poder enviar el texto */
-                onDelete={() => deleteTodo(todo.text)}
-              />)}
-          </TodoList>
-        )}
-      </TodoContext.Consumer>
+        {searchedTodos.map(todo =>
+          <TodoItem key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}/*Encapsular la funcion dentro de otra funcion para poder enviar el texto */
+            onDelete={() => deleteTodo(todo.text)}
+          />)}
+      </TodoList>
       <CreateTodoButton />
-
     </React.Fragment>
   );
 }
