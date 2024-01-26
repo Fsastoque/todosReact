@@ -18,7 +18,8 @@ function TodoProvider({children}){
       setTodos = Funcion que actualiza el valor | actualiza estado
       */
       const [searchValue, setSearchValue] = React.useState(''); /*estado parametros que envia react, se define un estado inicial en useState*/
-    
+      const [openModal, setOpenModal] = React.useState(true); 
+
       /*Estados derivados son calculos o formulas que se hacencon los estados */
       const completedTodos = todos.filter(todo => !!todo.completed).length;
       const totalTodos = todos.length;
@@ -70,7 +71,9 @@ function TodoProvider({children}){
             setSearchValue,
             searchedTodos,
             completeTodo,
-            deleteTodo
+            deleteTodo,
+            openModal,
+            setOpenModal,
           }}>
             {children}
         </TodoContext.Provider>

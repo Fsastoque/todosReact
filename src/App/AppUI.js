@@ -5,8 +5,10 @@ import { TodoList } from '../TodoList';
 import { TodoItem } from '../TodoItem';
 import { CreateTodoButton } from '../CreateTodoButton';
 import { TodosLoading } from "../TodosLoading";
-import { TodosError } from "../TodosError"
-import { EmptyTodos } from "../EmptyTodos"
+import { TodosError } from "../TodosError";
+import { EmptyTodos } from "../EmptyTodos";
+import { TodoForm } from "../TodoForm";
+import { Modal } from '../Modal';
 import { TodoContext } from "../TodoContext";
 
 
@@ -18,6 +20,8 @@ function AppUI() {
     searchedTodos,
     completeTodo,
     deleteTodo,
+    openModal,
+    setOpenModal,
   } = React.useContext(TodoContext)
 
   return (
@@ -43,7 +47,15 @@ function AppUI() {
           />)}
       </TodoList>
       <CreateTodoButton />
+
+      {openModal && (
+        <Modal>
+          <TodoForm />
+        </Modal>
+      )} 
+      
     </React.Fragment>
+    /*Se crea un estado para saber en que momento abrirlo o cerrarlo*/
   );
 }
 
