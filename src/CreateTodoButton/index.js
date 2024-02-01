@@ -1,7 +1,8 @@
 import React from 'react'
 import './CreateTodoButton.css'
 
-function CreateTodoButton() {
+/*Recibir la propiedad setopenmodal */
+function CreateTodoButton({ setOpenModal }) {
   return (
     <button className='CreateTodoButton' 
     onClick={

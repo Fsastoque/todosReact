@@ -46,7 +46,9 @@ function AppUI() {
             onDelete={() => deleteTodo(todo.text)}
           />)}
       </TodoList>
-      <CreateTodoButton />
+      <CreateTodoButton 
+        setOpenModal={setOpenModal} /*Envio la propiedad al CreateTodoButton*/
+      />
 
       {openModal && (
         <Modal>
