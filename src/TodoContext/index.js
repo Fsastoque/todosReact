@@ -18,7 +18,7 @@ function TodoProvider({children}){
       setTodos = Funcion que actualiza el valor | actualiza estado
       */
       const [searchValue, setSearchValue] = React.useState(''); /*estado parametros que envia react, se define un estado inicial en useState*/
-      const [openModal, setOpenModal] = React.useState(true); 
+      const [openModal, setOpenModal] = React.useState(false); 
 
       /*Estados derivados son calculos o formulas que se hacencon los estados */
       const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -29,6 +29,17 @@ function TodoProvider({children}){
         return todoText.includes(searchText)
       });
     
+      const addTodo = (text) =>{
+        const newTodos = [...todos];
+        newTodos.push(
+          {
+            text,
+            completed: false,
+          }
+        )
+        saveTodos(newTodos);
+      };
+
       const completeTodo = (text) => {
         const newTodos = [...todos];/*Crear copia arrays todos con los ... */
         const todoIndex = newTodos.findIndex(
@@ -74,6 +85,7 @@ function TodoProvider({children}){
             deleteTodo,
             openModal,
             setOpenModal,
+            addTodo,
           }}>
             {children}
         </TodoContext.Provider>
