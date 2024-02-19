@@ -1,13 +1,12 @@
 import React from 'react'
 import './CreateTodoButton.css'
 
-function CreateTodoButton() {
+function CreateTodoButton({ setOpenModal }) {
   return (
     <button className='CreateTodoButton' 
     onClick={
-      (event) => {
-        console.log('Hiciste click')
-        console.log(event.target)
+      () => {
+       setOpenModal(state => !state);//Llamar el actualizador del estado, se envia una array funtion y devuelve la negación del estado
     }
     }>+</button>
   )
